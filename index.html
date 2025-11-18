@@ -238,6 +238,8 @@
       place-items: center;
       pointer-events: auto;
       cursor: pointer;
+      background: transparent;
+      border: none;
     }
 
     .catalina-tours__play img {
@@ -382,9 +384,9 @@
           <div class="catalina-tours__panel" data-tour="duplex">
             <!-- Video Dúplex (YouTube): https://youtu.be/Tm8eylhbvWQ?si=9bPHoaIT0hlJVO2u -->
             <img class="catalina-tours__poster" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea14379d23da0d86909a.png" alt="Portada videorecorrido dúplex">
-            <div class="catalina-tours__play" aria-hidden="true">
+            <button class="catalina-tours__play" type="button" aria-label="Reproducir videorecorrido dúplex">
               <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea9fc20a256013a1c23c.png" alt="Botón reproducir">
-            </div>
+            </button>
             <div class="catalina-tours__player" hidden>
               <iframe data-src="https://www.youtube.com/embed/Tm8eylhbvWQ?rel=0" title="Videorecorrido dúplex" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
@@ -393,9 +395,9 @@
           <div class="catalina-tours__panel" data-tour="flat" hidden>
             <!-- Video Flat (YouTube): https://youtu.be/e0qLO4XAQlc -->
             <div class="catalina-tours__poster catalina-tours__poster--flat" role="presentation"></div>
-            <div class="catalina-tours__play" aria-hidden="true">
+            <button class="catalina-tours__play" type="button" aria-label="Reproducir videorecorrido flat">
               <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea9fc20a256013a1c23c.png" alt="Botón reproducir">
-            </div>
+            </button>
             <div class="catalina-tours__player" hidden>
               <iframe data-src="https://www.youtube.com/embed/e0qLO4XAQlc?rel=0" title="Videorecorrido flat" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
@@ -484,7 +486,12 @@
 
     tourPanels.forEach((panel) => {
       const overlay = panel.querySelector('.catalina-tours__play');
+      const poster = panel.querySelector('.catalina-tours__poster');
+
       overlay.addEventListener('click', () => playTour(panel.dataset.tour));
+      if (poster) {
+        poster.addEventListener('click', () => playTour(panel.dataset.tour));
+      }
     });
 
     arrowLeft.addEventListener('click', () => moveSlide(-1));
