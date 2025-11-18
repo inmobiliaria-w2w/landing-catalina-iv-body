@@ -387,9 +387,7 @@
             <button class="catalina-tours__play" type="button" aria-label="Reproducir videorecorrido dúplex">
               <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea9fc20a256013a1c23c.png" alt="Botón reproducir">
             </button>
-            <div class="catalina-tours__player" hidden>
-              <iframe data-src="https://www.youtube.com/embed/HELtFWJi3cI?si=WPainYYEQzOCJ6jG" title="Videorecorrido dúplex" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
+            <div class="catalina-tours__player" data-src="https://www.youtube.com/embed/HELtFWJi3cI?si=WPainYYEQzOCJ6jG" hidden></div>
           </div>
 
           <div class="catalina-tours__panel" data-tour="flat" hidden>
@@ -398,9 +396,7 @@
             <button class="catalina-tours__play" type="button" aria-label="Reproducir videorecorrido flat">
               <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea9fc20a256013a1c23c.png" alt="Botón reproducir">
             </button>
-            <div class="catalina-tours__player" hidden>
-              <iframe data-src="https://www.youtube.com/embed/e0qLO4XAQlc?si=7KTNzINbGv-mxVc3" title="Videorecorrido flat" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
+            <div class="catalina-tours__player" data-src="https://www.youtube.com/embed/e0qLO4XAQlc?si=7KTNzINbGv-mxVc3" hidden></div>
           </div>
         </div>
 
@@ -434,7 +430,9 @@
       const iframe = player.querySelector('iframe');
       overlay.hidden = false;
       player.hidden = true;
-      iframe.src = '';
+      if (iframe) {
+        iframe.remove();
+      }
     }
 
     function setActiveTour(tour) {
@@ -457,13 +455,21 @@
       if (!panel) return;
       const overlay = panel.querySelector('.catalina-tours__play');
       const player = panel.querySelector('.catalina-tours__player');
-      const iframe = player.querySelector('iframe');
+      const base = player.dataset.src;
+      const separator = base.includes('?') ? '&' : '?';
 
-      if (!iframe.src) {
-        const base = iframe.dataset.src;
-        const separator = base.includes('?') ? '&' : '?';
-        iframe.src = `${base}${separator}autoplay=1`;
+      let iframe = player.querySelector('iframe');
+      if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.title = panel.dataset.tour === 'duplex' ? 'Videorecorrido dúplex' : 'Videorecorrido flat';
+        iframe.frameBorder = '0';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.allowFullscreen = true;
+        player.appendChild(iframe);
       }
+
+      iframe.src = `${base}${separator}autoplay=1`;
 
       overlay.hidden = true;
       player.hidden = false;
