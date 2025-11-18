@@ -416,12 +416,12 @@
         const iframe = panel.querySelector('iframe');
         if (!iframe) return;
 
-        const currentSrc = iframe.getAttribute('src');
         const base = iframe.dataset.src || tourSources[panel.dataset.tour];
-
-        if (isActive && !currentSrc) {
-          iframe.setAttribute('src', base);
-        } else if (!isActive && currentSrc) {
+        if (isActive) {
+          if (base && iframe.getAttribute('src') !== base) {
+            iframe.setAttribute('src', base);
+          }
+        } else if (iframe.getAttribute('src')) {
           iframe.removeAttribute('src');
         }
       });
