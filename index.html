@@ -444,6 +444,7 @@
     }
 
     function setActiveTour(tour) {
+      if (!tourSources[tour]) return;
       tourFrame.setAttribute('data-active-tour', tour);
       tourPills.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.tour === tour)));
       tourDots.forEach((dot) => dot.setAttribute('aria-pressed', String(dot.dataset.tour === tour)));
@@ -458,6 +459,7 @@
     }
 
     function playTour(tour) {
+      if (!tourSources[tour]) return;
       setActiveTour(tour);
       const panel = tourPanelsById[tour];
       if (!panel) return;
@@ -501,10 +503,14 @@
     tourPanels.forEach((panel) => {
       const overlay = panel.querySelector('.catalina-tours__play');
       const poster = panel.querySelector('.catalina-tours__poster');
+      const tourId = panel.dataset.tour;
+      const handlePlay = () => playTour(tourId);
 
-      overlay.addEventListener('click', () => playTour(panel.dataset.tour));
+      overlay.dataset.tour = tourId;
+      overlay.addEventListener('click', handlePlay);
       if (poster) {
-        poster.addEventListener('click', () => playTour(panel.dataset.tour));
+        poster.dataset.tour = tourId;
+        poster.addEventListener('click', handlePlay);
       }
     });
 
