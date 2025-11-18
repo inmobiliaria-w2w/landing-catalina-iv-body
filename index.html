@@ -408,17 +408,18 @@
       position: relative;
       background: #f9f9f9;
       border-radius: 18px;
-      padding: clamp(14px, 2.5vw, 20px);
-      min-height: clamp(260px, 48vw, 540px);
+      padding: clamp(10px, 2vw, 16px);
+      aspect-ratio: 16 / 9;
+      max-width: 960px;
+      width: 100%;
       box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
       overflow: hidden;
-      display: grid;
-      place-items: center;
+      margin-inline: auto;
     }
 
     .catalina-types__slide {
       position: absolute;
-      inset: 0;
+      inset: clamp(4px, 0.8vw, 10px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -435,8 +436,7 @@
 
     .catalina-types__slide img {
       width: 100%;
-      max-width: 900px;
-      height: auto;
+      height: 100%;
       aspect-ratio: 16 / 9;
       object-fit: contain;
       border-radius: 12px;
@@ -510,7 +510,7 @@
       }
 
       .catalina-types__frame {
-        min-height: clamp(240px, 60vw, 420px);
+        max-width: 900px;
       }
     }
 
@@ -526,7 +526,7 @@
       }
 
       .catalina-types__frame {
-        min-height: clamp(260px, 80vw, 360px);
+        max-width: 100%;
       }
 
       .catalina-types__decor {
