@@ -423,6 +423,14 @@
     const arrowRight = document.querySelector('.catalina-tours__arrow--right');
     const tourOrder = ['duplex', 'flat'];
     const tourPanels = Array.from(document.querySelectorAll('.catalina-tours__panel'));
+    const tourSources = {
+      duplex: 'https://www.youtube.com/embed/HELtFWJi3cI?si=WPainYYEQzOCJ6jG',
+      flat: 'https://www.youtube.com/embed/e0qLO4XAQlc?si=7KTNzINbGv-mxVc3',
+    };
+    const tourPanelsById = tourPanels.reduce((acc, panel) => {
+      acc[panel.dataset.tour] = panel;
+      return acc;
+    }, {});
 
     function resetPanel(panel) {
       const overlay = panel.querySelector('.catalina-tours__play');
@@ -451,11 +459,11 @@
 
     function playTour(tour) {
       setActiveTour(tour);
-      const panel = tourPanels.find((item) => item.dataset.tour === tour);
+      const panel = tourPanelsById[tour];
       if (!panel) return;
       const overlay = panel.querySelector('.catalina-tours__play');
       const player = panel.querySelector('.catalina-tours__player');
-      const base = player.dataset.src;
+      const base = tourSources[tour];
       const separator = base.includes('?') ? '&' : '?';
 
       let iframe = player.querySelector('iframe');
