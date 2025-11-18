@@ -416,11 +416,13 @@
         const iframe = panel.querySelector('iframe');
         if (!iframe) return;
 
-        if (isActive && !iframe.src) {
-          const base = iframe.dataset.src || tourSources[panel.dataset.tour];
-          iframe.src = base;
-        } else if (!isActive && iframe.src) {
-          iframe.src = '';
+        const currentSrc = iframe.getAttribute('src');
+        const base = iframe.dataset.src || tourSources[panel.dataset.tour];
+
+        if (isActive && !currentSrc) {
+          iframe.setAttribute('src', base);
+        } else if (!isActive && currentSrc) {
+          iframe.removeAttribute('src');
         }
       });
     }
