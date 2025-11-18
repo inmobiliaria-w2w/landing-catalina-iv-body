@@ -349,12 +349,12 @@
       border-radius: 8px;
       background: transparent;
       transition: background 0.6s ease, color 0.6s ease, box-shadow 0.6s ease;
-      color: inherit;
+      color: #ffffff;
     }
 
     .catalina-types.is-visible .catalina-types__highlight {
       background: #95ca3a;
-      color: #0f0f0f;
+      color: #ffffff;
       animation: tours-highlight 1.6s ease-in-out 1;
       box-shadow: 0 10px 25px rgba(149, 202, 58, 0.35);
     }
@@ -367,31 +367,33 @@
     }
 
     .catalina-types__pill {
-      border: none;
+      border: 1px solid #e0e0e0;
       border-radius: 999px;
       padding: 12px 18px;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      background: #78a55a;
-      color: #ffffff;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.25s ease;
-      box-shadow: 0 12px 28px rgba(120, 165, 90, 0.32);
+      background: #f7f7f7;
+      color: #6b6b6b;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      box-shadow: none;
     }
 
     .catalina-types__pill:hover,
     .catalina-types__pill:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 32px rgba(120, 165, 90, 0.36);
+      background: #ededed;
+      border-color: #d8d8d8;
       outline: none;
     }
 
     .catalina-types__pill[aria-pressed="true"] {
-      opacity: 1;
+      background: #78a55a;
+      border-color: #78a55a;
+      color: #ffffff;
     }
 
     .catalina-types__pill[aria-pressed="false"] {
-      opacity: 0.65;
+      color: #6b6b6b;
     }
 
     .catalina-types__viewer {
@@ -406,18 +408,20 @@
       position: relative;
       background: #f9f9f9;
       border-radius: 18px;
-      padding: clamp(18px, 3vw, 24px);
-      min-height: clamp(240px, 42vw, 520px);
+      padding: clamp(14px, 2.5vw, 20px);
+      min-height: clamp(260px, 48vw, 540px);
       box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
       overflow: hidden;
+      display: grid;
+      place-items: center;
     }
 
     .catalina-types__slide {
       position: absolute;
       inset: 0;
-      display: grid;
-      grid-template-rows: auto 1fr;
-      gap: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
@@ -429,17 +433,11 @@
       position: absolute;
     }
 
-    .catalina-types__slide h3 {
-      margin: 0;
-      font-size: clamp(18px, 2vw, 22px);
-      font-weight: 700;
-      color: #3b3b3b;
-      letter-spacing: -0.2px;
-    }
-
     .catalina-types__slide img {
       width: 100%;
-      height: 100%;
+      max-width: 900px;
+      height: auto;
+      aspect-ratio: 16 / 9;
       object-fit: contain;
       border-radius: 12px;
       background: #ffffff;
@@ -642,22 +640,18 @@
 
         <div class="catalina-types__frame" data-active-type="flat1">
           <article class="catalina-types__slide is-active" data-type="flat1">
-            <h3>Flat 1</h3>
             <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc583dd38285b958a754f.png" alt="Plano de tipología Flat 1">
           </article>
 
           <article class="catalina-types__slide" data-type="flat2" hidden>
-            <h3>Flat 2</h3>
             <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc5832d39a444e92e362c.png" alt="Plano de tipología Flat 2">
           </article>
 
           <article class="catalina-types__slide" data-type="duplex1" hidden>
-            <h3>Dúplex 1</h3>
             <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc5836d309e7665117882.png" alt="Plano de tipología Dúplex 1">
           </article>
 
           <article class="catalina-types__slide" data-type="duplex2" hidden>
-            <h3>Dúplex 2</h3>
             <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc5838489290706b63250.png" alt="Plano de tipología Dúplex 2">
           </article>
         </div>
