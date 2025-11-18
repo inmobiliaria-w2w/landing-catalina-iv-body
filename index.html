@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyecto Catalina IV - Beneficios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /*
+     * Estilos acotados a la sección de beneficios para no afectar el hero u otras partes de la landing.
+     */
+    .catalina-benefits {
+      font-family: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #78a55c;
+      color: #ffffff;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .catalina-benefits__inner {
+      width: min(1200px, 100%);
+      padding: 48px 24px 56px;
+    }
+
+    .catalina-benefits__grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 32px;
+      align-items: start;
+      justify-items: center;
+    }
+
+    .catalina-benefits__card {
+      max-width: 240px;
+      text-align: center;
+      line-height: 1.5;
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .catalina-benefits__icon {
+      width: 80px;
+      height: auto;
+      margin-bottom: 16px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .catalina-benefits__card p {
+      margin: 0;
+      padding: 0 10px;
+    }
+
+    .catalina-benefits__card strong {
+      font-weight: 700;
+    }
+
+    @media (max-width: 1024px) {
+      .catalina-benefits__inner {
+        padding: 44px 24px 52px;
+      }
+
+      .catalina-benefits__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .catalina-benefits__inner {
+        padding: 40px 20px 48px;
+      }
+
+      .catalina-benefits__card {
+        max-width: 240px;
+        font-size: 16px;
+      }
+
+      .catalina-benefits__icon {
+        width: 72px;
+        margin-bottom: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="catalina-benefits" aria-label="Beneficios del proyecto Catalina IV">
+    <div class="catalina-benefits__inner">
+      <div class="catalina-benefits__grid">
+        <article class="catalina-benefits__card">
+          <img class="catalina-benefits__icon" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bb6077d92cc69c01f1d13.png" alt="Icono de pisos superpuestos" />
+          <p>Edificio boutique de 10 pisos + azotea con solo <strong>2 depas por piso</strong>.</p>
+        </article>
+
+        <article class="catalina-benefits__card">
+          <img class="catalina-benefits__icon" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bb607c761d4549cd42a8e.png" alt="Icono de estacionamiento" />
+          <p>Fácil acceso al estacionamiento, desde <strong>cualquier</strong> dirección.</p>
+        </article>
+
+        <article class="catalina-benefits__card">
+          <img class="catalina-benefits__icon" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bb607768afbf876715e18.png" alt="Icono de edificio en esquina" />
+          <p>Único proyecto del cuadrante ubicado en <strong>esquina</strong>.</p>
+        </article>
+
+        <article class="catalina-benefits__card">
+          <img class="catalina-benefits__icon" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bb607c761d42d69d42a8d.png" alt="Icono de vista" />
+          <p>Todas las vistas son <strong>externas</strong>. Nadie construirá delante tuyo.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
