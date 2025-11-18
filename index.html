@@ -208,6 +208,14 @@
       box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
     }
 
+    .catalina-tours__panel {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .catalina-tours__poster {
       width: 100%;
       height: 100%;
@@ -228,13 +236,26 @@
       inset: 0;
       display: grid;
       place-items: center;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: pointer;
     }
 
     .catalina-tours__play img {
       width: clamp(56px, 9vw, 96px);
       height: auto;
       filter: drop-shadow(0 10px 20px rgba(0,0,0,0.25));
+    }
+
+    .catalina-tours__player {
+      position: absolute;
+      inset: 0;
+    }
+
+    .catalina-tours__player iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
     }
 
     .catalina-tours__pagination {
@@ -261,9 +282,9 @@
 
     .catalina-tours__leaf {
       position: absolute;
-      left: 12px;
-      bottom: 6px;
-      width: 90px;
+      left: 22px;
+      bottom: 14px;
+      width: 150px;
       height: auto;
       pointer-events: none;
     }
@@ -298,24 +319,17 @@
       }
 
       .catalina-tours__arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 2;
-        background: rgba(255, 255, 255, 0.76);
-        border-radius: 50%;
-        box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+        display: none;
       }
-
-      .catalina-tours__arrow--left { left: 10px; }
-      .catalina-tours__arrow--right { right: 10px; }
 
       .catalina-tours__frame {
         min-height: clamp(220px, 65vw, 360px);
       }
 
       .catalina-tours__leaf {
-        width: 72px;
+        width: 130px;
+        left: 14px;
+        bottom: 8px;
       }
     }
   </style>
@@ -365,17 +379,27 @@
         </button>
 
         <div class="catalina-tours__frame" data-active-tour="duplex">
-          <!-- Video Dúplex (YouTube): https://youtu.be/Tm8eylhbvWQ?si=9bPHoaIT0hlJVO2u -->
-          <img class="catalina-tours__poster" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea14379d23da0d86909a.png" alt="Portada videorecorrido dúplex" data-tour="duplex">
-          <div class="catalina-tours__play" aria-hidden="true">
-            <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea9fc20a256013a1c23c.png" alt="Botón reproducir">
+          <div class="catalina-tours__panel" data-tour="duplex">
+            <!-- Video Dúplex (YouTube): https://youtu.be/Tm8eylhbvWQ?si=9bPHoaIT0hlJVO2u -->
+            <img class="catalina-tours__poster" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea14379d23da0d86909a.png" alt="Portada videorecorrido dúplex">
+            <div class="catalina-tours__play" aria-hidden="true">
+              <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea9fc20a256013a1c23c.png" alt="Botón reproducir">
+            </div>
+            <div class="catalina-tours__player" hidden>
+              <iframe data-src="https://www.youtube.com/embed/Tm8eylhbvWQ?rel=0" title="Videorecorrido dúplex" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
           </div>
-          <!-- Video Flat (YouTube): https://youtu.be/e0qLO4XAQlc -->
-          <div class="catalina-tours__play" aria-hidden="true" hidden data-tour="flat">
-            <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea9fc20a256013a1c23c.png" alt="Botón reproducir">
+
+          <div class="catalina-tours__panel" data-tour="flat" hidden>
+            <!-- Video Flat (YouTube): https://youtu.be/e0qLO4XAQlc -->
+            <div class="catalina-tours__poster catalina-tours__poster--flat" role="presentation"></div>
+            <div class="catalina-tours__play" aria-hidden="true">
+              <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bea9fc20a256013a1c23c.png" alt="Botón reproducir">
+            </div>
+            <div class="catalina-tours__player" hidden>
+              <iframe data-src="https://www.youtube.com/embed/e0qLO4XAQlc?rel=0" title="Videorecorrido flat" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
           </div>
-          <div class="catalina-tours__poster catalina-tours__poster--flat" role="presentation" data-tour="flat" hidden></div>
-          <img class="catalina-tours__leaf" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bd6cbc20a25ba3d9c9b98.png" alt="Decoración de hojas">
         </div>
 
         <button class="catalina-tours__arrow catalina-tours__arrow--right" type="button" aria-label="Ver siguiente video">
@@ -387,6 +411,8 @@
         <button class="catalina-tours__dot" type="button" data-tour="duplex" aria-pressed="true"></button>
         <button class="catalina-tours__dot" type="button" data-tour="flat" aria-pressed="false"></button>
       </div>
+
+      <img class="catalina-tours__leaf" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bd6cbc20a25ba3d9c9b98.png" alt="Decoración de hojas">
     </div>
   </section>
 
@@ -398,26 +424,47 @@
     const arrowLeft = document.querySelector('.catalina-tours__arrow--left');
     const arrowRight = document.querySelector('.catalina-tours__arrow--right');
     const tourOrder = ['duplex', 'flat'];
-    const tourPosters = Array.from(document.querySelectorAll('.catalina-tours__poster'));
-    const tourPlayOverlays = Array.from(document.querySelectorAll('.catalina-tours__play'));
+    const tourPanels = Array.from(document.querySelectorAll('.catalina-tours__panel'));
+
+    function resetPanel(panel) {
+      const overlay = panel.querySelector('.catalina-tours__play');
+      const player = panel.querySelector('.catalina-tours__player');
+      const iframe = player.querySelector('iframe');
+      overlay.hidden = false;
+      player.hidden = true;
+      iframe.src = '';
+    }
 
     function setActiveTour(tour) {
       tourFrame.setAttribute('data-active-tour', tour);
       tourPills.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.tour === tour)));
       tourDots.forEach((dot) => dot.setAttribute('aria-pressed', String(dot.dataset.tour === tour)));
 
-      tourPosters.forEach((poster) => {
-        const match = poster.dataset.tour === tour;
-        poster.hidden = !match;
-        if (poster.classList.contains('catalina-tours__poster--flat')) {
-          poster.style.display = match ? 'block' : 'none';
+      tourPanels.forEach((panel) => {
+        const isActive = panel.dataset.tour === tour;
+        panel.hidden = !isActive;
+        if (!isActive) {
+          resetPanel(panel);
         }
       });
+    }
 
-      tourPlayOverlays.forEach((overlay) => {
-        const match = overlay.dataset.tour ? overlay.dataset.tour === tour : tour === 'duplex';
-        overlay.hidden = !match;
-      });
+    function playTour(tour) {
+      setActiveTour(tour);
+      const panel = tourPanels.find((item) => item.dataset.tour === tour);
+      if (!panel) return;
+      const overlay = panel.querySelector('.catalina-tours__play');
+      const player = panel.querySelector('.catalina-tours__player');
+      const iframe = player.querySelector('iframe');
+
+      if (!iframe.src) {
+        const base = iframe.dataset.src;
+        const separator = base.includes('?') ? '&' : '?';
+        iframe.src = `${base}${separator}autoplay=1`;
+      }
+
+      overlay.hidden = true;
+      player.hidden = false;
     }
 
     function moveSlide(direction) {
@@ -433,6 +480,11 @@
 
     tourDots.forEach((dot) => {
       dot.addEventListener('click', () => setActiveTour(dot.dataset.tour));
+    });
+
+    tourPanels.forEach((panel) => {
+      const overlay = panel.querySelector('.catalina-tours__play');
+      overlay.addEventListener('click', () => playTour(panel.dataset.tour));
     });
 
     arrowLeft.addEventListener('click', () => moveSlide(-1));
