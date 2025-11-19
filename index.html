@@ -267,15 +267,6 @@
       transform: translateY(-1px);
     }
 
-    .catalina-tours__leaf {
-      position: absolute;
-      left: 22px;
-      bottom: 14px;
-      width: 150px;
-      height: auto;
-      pointer-events: none;
-    }
-
     @media (max-width: 900px) {
       .catalina-tours {
         padding: 60px 14px 76px;
@@ -312,12 +303,6 @@
       .catalina-tours__frame {
         min-height: clamp(220px, 65vw, 360px);
       }
-
-      .catalina-tours__leaf {
-        width: 130px;
-        left: 14px;
-        bottom: 8px;
-      }
     }
 
     /*
@@ -349,6 +334,7 @@
       font-weight: 700;
       line-height: 1.25;
       letter-spacing: -0.4px;
+      color: #3e3f3f;
     }
 
     .catalina-types__highlight {
@@ -617,6 +603,7 @@
       font-weight: 700;
       line-height: 1.2;
       letter-spacing: -0.3px;
+      text-align: left;
     }
 
     .catalina-location__lists {
@@ -728,6 +715,10 @@
       .catalina-location__map-frame {
         padding: 10px;
       }
+
+      .catalina-location__title {
+        text-align: center;
+      }
     }
 
     /*
@@ -776,7 +767,7 @@
       background-color: var(--orange);
       color: var(--white);
       font-weight: 600;
-      font-size: 15px;
+      font-size: 16px;
       padding: 14px 22px;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -798,9 +789,9 @@
     .catalina-cta__image {
       width: min(520px, 100%);
       height: auto;
-      border-radius: 24px;
+      border-radius: 0;
       display: block;
-      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.1);
+      box-shadow: none;
     }
 
     @media (max-width: 900px) {
@@ -916,14 +907,13 @@
         <button class="catalina-tours__dot" type="button" data-tour="flat" aria-pressed="false"></button>
       </div>
 
-      <img class="catalina-tours__leaf" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bd6cbc20a25ba3d9c9b98.png" alt="Decoración de hojas">
     </div>
   </section>
 
   <section class="catalina-types" id="tipologias" aria-label="Tipologías disponibles">
     <div class="catalina-types__inner">
       <div class="catalina-types__copy">
-        <h2>Tipologías pensadas para tu <span class="catalina-types__highlight" data-highlight="types">comodidad</span></h2>
+        <h2>Tipologías pensadas en tu <span class="catalina-types__highlight" data-highlight="types">comodidad</span></h2>
         <div class="catalina-types__pills" role="tablist" aria-label="Selecciona una tipología">
           <button class="catalina-types__pill" type="button" data-type="flat1" aria-pressed="true">Flat 1</button>
           <button class="catalina-types__pill" type="button" data-type="flat2" aria-pressed="false">Flat 2</button>
