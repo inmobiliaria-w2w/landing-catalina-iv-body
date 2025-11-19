@@ -939,19 +939,31 @@
 
         <div class="catalina-types__frame" data-active-type="flat1">
           <article class="catalina-types__slide is-active" data-type="flat1">
-            <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc583dd38285b958a754f.png" alt="Plano de tipología Flat 1">
+            <picture>
+              <source media="(max-width: 768px)" srcset="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691e1cbcf05eaf8c232a0444.png">
+              <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc583dd38285b958a754f.png" alt="Plano de tipología Flat 1">
+            </picture>
           </article>
 
           <article class="catalina-types__slide" data-type="flat2" hidden>
-            <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc5832d39a444e92e362c.png" alt="Plano de tipología Flat 2">
+            <picture>
+              <source media="(max-width: 768px)" srcset="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691e1cbc88e1e66202923b12.png">
+              <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc5832d39a444e92e362c.png" alt="Plano de tipología Flat 2">
+            </picture>
           </article>
 
           <article class="catalina-types__slide" data-type="duplex1" hidden>
-            <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc5836d309e7665117882.png" alt="Plano de tipología Dúplex 1">
+            <picture>
+              <source media="(max-width: 768px)" srcset="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691e1cbcd4f9b35b99712bb7.png">
+              <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc5836d309e7665117882.png" alt="Plano de tipología Dúplex 1">
+            </picture>
           </article>
 
           <article class="catalina-types__slide" data-type="duplex2" hidden>
-            <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc5838489290706b63250.png" alt="Plano de tipología Dúplex 2">
+            <picture>
+              <source media="(max-width: 768px)" srcset="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691e1cbc300f06a8c686ff8a.png">
+              <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691cc5838489290706b63250.png" alt="Plano de tipología Dúplex 2">
+            </picture>
           </article>
         </div>
 
@@ -1133,7 +1145,8 @@
 
     function openLightbox(image) {
       if (!image) return;
-      lightboxImage.src = image.src;
+      const activeSource = image.currentSrc || image.src;
+      lightboxImage.src = activeSource;
       lightboxImage.alt = image.alt || 'Tipología ampliada';
       lightbox.hidden = false;
       lightbox.setAttribute('aria-hidden', 'false');
