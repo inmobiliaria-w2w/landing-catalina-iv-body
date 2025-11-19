@@ -1145,7 +1145,8 @@
 
     function openLightbox(image) {
       if (!image) return;
-      lightboxImage.src = image.src;
+      const activeSource = image.currentSrc || image.src;
+      lightboxImage.src = activeSource;
       lightboxImage.alt = image.alt || 'Tipología ampliada';
       lightbox.hidden = false;
       lightbox.setAttribute('aria-hidden', 'false');
