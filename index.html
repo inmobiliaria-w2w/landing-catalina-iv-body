@@ -1227,6 +1227,26 @@
       }
     });
 
+    /* CTA: scroll a destinos distintos según viewport */
+    const ctaButton = document.querySelector('.catalina-cta__button');
+    const desktopHeroTarget = document.querySelector('#hero, [data-anchor="hero"], [data-hero-anchor]');
+    const mobileFormTarget = document.querySelector('#formulario, #form, #lead-form, [data-anchor="form"], [data-form-anchor]');
+
+    function scrollToTarget(target) {
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function handleCtaClick() {
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      const target = isMobile ? (mobileFormTarget || desktopHeroTarget || document.body) : (desktopHeroTarget || document.body);
+      scrollToTarget(target);
+    }
+
+    if (ctaButton) {
+      ctaButton.addEventListener('click', handleCtaClick);
+    }
+
     const highlightTargets = document.querySelectorAll('[data-highlight]');
     const highlightObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
