@@ -417,6 +417,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      touch-action: pan-y;
+      cursor: grab;
+    }
+
+    .catalina-types__frame.is-dragging {
+      cursor: grabbing;
     }
 
     .catalina-types__slide {
@@ -649,6 +655,12 @@
     @media (max-width: 520px) {
       .catalina-location {
         padding: 44px 16px 56px;
+      }
+
+      .catalina-location__title {
+        text-align: center;
+        margin-inline: auto;
+        margin-bottom: 28px;
       }
 
       .catalina-location__group {
@@ -898,6 +910,7 @@
     const typeOrder = ['flat1', 'flat2', 'duplex1', 'duplex2'];
     const TYPE_AUTOPLAY_DELAY = 4000;
     let swipeStartX = null;
+    let swipePointerId = null;
     let typeAutoplayId = null;
 
     function restartTypeAutoplay() {
@@ -943,23 +956,53 @@
       restartTypeAutoplay();
     });
 
-    typesFrame.addEventListener('pointerdown', (event) => {
-      swipeStartX = event.clientX;
-    });
+    function resetSwipeState() {
+      if (
+        swipePointerId !== null &&
+        typeof typesFrame.releasePointerCapture === 'function' &&
+        typeof typesFrame.hasPointerCapture === 'function' &&
+        typesFrame.hasPointerCapture(swipePointerId)
+      ) {
+        typesFrame.releasePointerCapture(swipePointerId);
+      }
+      swipeStartX = null;
+      swipePointerId = null;
+      typesFrame.classList.remove('is-dragging');
+    }
 
-    typesFrame.addEventListener('pointerup', (event) => {
-      if (swipeStartX === null) return;
-      const deltaX = event.clientX - swipeStartX;
+    function handleSwipe(deltaX) {
       const threshold = 40;
       if (Math.abs(deltaX) > threshold) {
         moveType(deltaX < 0 ? 1 : -1);
         restartTypeAutoplay();
+        resetSwipeState();
       }
-      swipeStartX = null;
+    }
+
+    typesFrame.addEventListener('pointerdown', (event) => {
+      swipeStartX = event.clientX;
+      swipePointerId = event.pointerId;
+      if (typeof typesFrame.setPointerCapture === 'function') {
+        typesFrame.setPointerCapture(event.pointerId);
+      }
+      typesFrame.classList.add('is-dragging');
+    });
+
+    typesFrame.addEventListener('pointermove', (event) => {
+      if (swipeStartX === null) return;
+      handleSwipe(event.clientX - swipeStartX);
+    });
+
+    typesFrame.addEventListener('pointerup', (event) => {
+      if (swipeStartX === null) return;
+      handleSwipe(event.clientX - swipeStartX);
+      if (swipeStartX !== null) {
+        resetSwipeState();
+      }
     });
 
     typesFrame.addEventListener('pointercancel', () => {
-      swipeStartX = null;
+      resetSwipeState();
     });
 
     const highlightTargets = document.querySelectorAll('[data-highlight]');
