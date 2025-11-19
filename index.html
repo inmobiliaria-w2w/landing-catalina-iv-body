@@ -322,7 +322,7 @@
       display: flex;
       justify-content: center;
       width: 100%;
-      padding: clamp(56px, 8vw, 96px) 18px clamp(68px, 9vw, 110px);
+      padding: clamp(72px, 9vw, 132px) 18px clamp(92px, 11vw, 150px);
       position: relative;
       overflow: hidden;
     }
@@ -362,15 +362,15 @@
     .catalina-types__pills {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      max-width: 360px;
+      gap: 10px;
+      max-width: 320px;
     }
 
     .catalina-types__pill {
       border: 1px solid #e0e0e0;
       border-radius: 999px;
-      padding: 12px 18px;
-      font-size: 16px;
+      padding: 10px 12px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
       background: #f7f7f7;
@@ -399,27 +399,28 @@
     .catalina-types__viewer {
       position: relative;
       display: grid;
-      grid-template-columns: 56px 1fr 56px;
+      grid-template-columns: 64px minmax(0, 1fr) 64px;
       align-items: center;
-      gap: 14px;
+      gap: 18px;
     }
 
     .catalina-types__frame {
       position: relative;
       background: #f9f9f9;
-      border-radius: 18px;
-      padding: clamp(10px, 2vw, 16px);
+      border-radius: 20px;
+      padding: clamp(14px, 2.6vw, 22px);
       aspect-ratio: 16 / 9;
-      max-width: 960px;
+      max-width: 1080px;
       width: 100%;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
+      min-height: clamp(320px, 48vw, 640px);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.12);
       overflow: hidden;
       margin-inline: auto;
     }
 
     .catalina-types__slide {
       position: absolute;
-      inset: clamp(4px, 0.8vw, 10px);
+      inset: clamp(4px, 0.6vw, 12px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -446,27 +447,25 @@
 
     .catalina-types__arrow {
       border: none;
-      background: #ffffff;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
+      background: transparent;
+      width: 64px;
+      height: 64px;
       display: grid;
       place-items: center;
       cursor: pointer;
-      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.12);
-      transition: transform 0.2s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+      transition: transform 0.2s ease, opacity 0.25s ease;
     }
 
     .catalina-types__arrow img {
-      width: 22px;
-      height: 22px;
+      width: 64px;
+      height: 64px;
       object-fit: contain;
     }
 
     .catalina-types__arrow:hover,
     .catalina-types__arrow:focus-visible {
-      transform: translateY(-1px);
-      box-shadow: 0 22px 42px rgba(0, 0, 0, 0.16);
+      transform: translateY(-2px);
+      opacity: 0.9;
       outline: none;
     }
 
@@ -491,22 +490,11 @@
       }
 
       .catalina-types__viewer {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .catalina-types__arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 2;
-      }
-
-      .catalina-types__arrow--left {
-        left: 12px;
-      }
-
-      .catalina-types__arrow--right {
-        right: 12px;
+        display: none;
       }
 
       .catalina-types__frame {
@@ -635,7 +623,7 @@
 
       <div class="catalina-types__viewer">
         <button class="catalina-types__arrow catalina-types__arrow--left" type="button" aria-label="Ver tipología anterior">
-          <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bd6d23f8277191ffdaf29.png" alt="Anterior">
+          <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691dc0d6e171b872753090f0.png" alt="Anterior">
         </button>
 
         <div class="catalina-types__frame" data-active-type="flat1">
@@ -657,7 +645,7 @@
         </div>
 
         <button class="catalina-types__arrow catalina-types__arrow--right" type="button" aria-label="Ver siguiente tipología">
-          <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bd6d1379d23c6bb81a479.png" alt="Siguiente">
+          <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691dc0d6d4f9b3615662e981.png" alt="Siguiente">
         </button>
       </div>
     </div>
@@ -729,7 +717,16 @@
     const typeArrowLeft = document.querySelector('.catalina-types__arrow--left');
     const typeArrowRight = document.querySelector('.catalina-types__arrow--right');
     const typeOrder = ['flat1', 'flat2', 'duplex1', 'duplex2'];
+    const TYPE_AUTOPLAY_DELAY = 4000;
     let swipeStartX = null;
+    let typeAutoplayId = null;
+
+    function restartTypeAutoplay() {
+      if (typeAutoplayId) {
+        clearInterval(typeAutoplayId);
+      }
+      typeAutoplayId = setInterval(() => moveType(1), TYPE_AUTOPLAY_DELAY);
+    }
 
     function setActiveType(type) {
       if (!typeOrder.includes(type)) return;
@@ -751,11 +748,21 @@
     }
 
     typePills.forEach((button) => {
-      button.addEventListener('click', () => setActiveType(button.dataset.type));
+      button.addEventListener('click', () => {
+        setActiveType(button.dataset.type);
+        restartTypeAutoplay();
+      });
     });
 
-    typeArrowLeft.addEventListener('click', () => moveType(-1));
-    typeArrowRight.addEventListener('click', () => moveType(1));
+    typeArrowLeft.addEventListener('click', () => {
+      moveType(-1);
+      restartTypeAutoplay();
+    });
+
+    typeArrowRight.addEventListener('click', () => {
+      moveType(1);
+      restartTypeAutoplay();
+    });
 
     typesFrame.addEventListener('pointerdown', (event) => {
       swipeStartX = event.clientX;
@@ -767,7 +774,12 @@
       const threshold = 40;
       if (Math.abs(deltaX) > threshold) {
         moveType(deltaX < 0 ? 1 : -1);
+        restartTypeAutoplay();
       }
+      swipeStartX = null;
+    });
+
+    typesFrame.addEventListener('pointercancel', () => {
       swipeStartX = null;
     });
 
@@ -788,6 +800,7 @@
 
     setActiveTour(tourFrame.getAttribute('data-active-tour'));
     setActiveType(typesFrame.getAttribute('data-active-type'));
+    restartTypeAutoplay();
   </script>
 </body>
 </html>
