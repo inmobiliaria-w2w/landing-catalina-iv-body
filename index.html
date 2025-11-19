@@ -8,6 +8,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+    }
     /*
      * Estilos acotados a la sección de beneficios para no afectar el hero u otras partes de la landing.
      */
@@ -525,6 +534,11 @@
       grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
       gap: clamp(28px, 4vw, 64px);
       align-items: center;
+      box-sizing: border-box;
+    }
+
+    .catalina-location__inner > * {
+      min-width: 0;
     }
 
     .catalina-location__title {
@@ -598,6 +612,8 @@
       border-radius: 22px;
       padding: clamp(12px, 2vw, 18px);
       box-shadow: 0 32px 60px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .catalina-location__map-embed {
@@ -608,6 +624,7 @@
       border-radius: 16px;
       overflow: hidden;
       aspect-ratio: 16 / 9;
+      max-width: 100%;
     }
 
     .catalina-location__map-embed iframe {
@@ -616,6 +633,7 @@
       border: 0;
       border-radius: 16px;
       display: block;
+      max-width: 100%;
     }
 
     @media (max-width: 960px) {
