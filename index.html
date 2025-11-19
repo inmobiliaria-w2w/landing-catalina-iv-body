@@ -400,36 +400,29 @@
       background: #f9f9f9;
       border-radius: 20px;
       padding: clamp(14px, 2.6vw, 22px);
-      aspect-ratio: 16 / 9;
       width: 100%;
       max-width: none;
-      min-height: clamp(320px, 40vw, 620px);
       box-shadow: 0 28px 60px rgba(0, 0, 0, 0.12);
       overflow: hidden;
       margin-inline: auto;
-    }
-
-    .catalina-types__slide {
-      position: absolute;
-      inset: clamp(4px, 0.6vw, 12px);
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
+    }
+
+    .catalina-types__slide {
+      width: 100%;
+      display: none;
     }
 
     .catalina-types__slide.is-active {
-      opacity: 1;
-      pointer-events: auto;
-      position: absolute;
+      display: block;
     }
 
     .catalina-types__slide img {
       width: 100%;
-      height: 100%;
-      aspect-ratio: 16 / 9;
+      height: auto;
+      display: block;
       object-fit: contain;
       border-radius: 12px;
       background: #ffffff;
