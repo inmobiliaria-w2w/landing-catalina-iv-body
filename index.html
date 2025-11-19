@@ -8,6 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --orange: #ff9a41;
+      --white: #ffffff;
+      --cta-text: #3e3f3f;
+      --cta-highlight: #95ca3a;
+    }
+
     *,
     *::before,
     *::after {
@@ -722,6 +729,109 @@
         padding: 10px;
       }
     }
+
+    /*
+     * Sección de CTA final.
+     */
+    .catalina-cta {
+      font-family: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: clamp(54px, 7vw, 96px) clamp(18px, 4vw, 32px) clamp(62px, 9vw, 110px);
+    }
+
+    .catalina-cta__inner {
+      width: min(1200px, 100%);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      align-items: center;
+      gap: clamp(28px, 5vw, 48px);
+    }
+
+    .catalina-cta__copy {
+      color: var(--cta-text);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .catalina-cta__copy h2 {
+      margin: 0;
+      font-size: clamp(26px, 3.4vw, 36px);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.2px;
+    }
+
+    .catalina-cta__highlight {
+      color: var(--cta-highlight);
+    }
+
+    .catalina-cta__button {
+      align-self: flex-start;
+      border: none;
+      border-radius: 999px;
+      background-color: var(--orange);
+      color: var(--white);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 22px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: none;
+    }
+
+    .catalina-cta__button:hover,
+    .catalina-cta__button:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(255, 154, 65, 0.4);
+      outline: none;
+    }
+
+    .catalina-cta__media {
+      display: flex;
+      justify-content: center;
+    }
+
+    .catalina-cta__image {
+      width: min(520px, 100%);
+      height: auto;
+      border-radius: 24px;
+      display: block;
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 900px) {
+      .catalina-cta__inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .catalina-cta__copy {
+        align-items: center;
+      }
+
+      .catalina-cta__button {
+        align-self: center;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .catalina-cta {
+        padding: clamp(46px, 12vw, 60px) 16px clamp(54px, 14vw, 72px);
+      }
+
+      .catalina-cta__copy {
+        gap: 16px;
+      }
+
+      .catalina-cta__button {
+        width: auto;
+        min-width: 240px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -900,6 +1010,28 @@
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="catalina-cta" aria-label="Regístrate para visitar Catalina IV">
+    <div class="catalina-cta__inner">
+      <div class="catalina-cta__copy">
+        <h2>
+          En <span class="catalina-cta__highlight">Catalina IV</span>, solo hay 19 oportunidades de vivir distinto.<br />
+          Tu espacio espera por ti.<br />
+          ¿Vienes a verlo?
+        </h2>
+        <button class="catalina-cta__button" type="button">¡Quiero registrarme!</button>
+      </div>
+
+      <div class="catalina-cta__media">
+        <img
+          class="catalina-cta__image"
+          src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691de807840ed16ad9324c02.png"
+          alt="Render exterior del edificio Catalina IV"
+          loading="lazy"
+        />
       </div>
     </div>
   </section>
@@ -1094,6 +1226,51 @@
         closeLightbox();
       }
     });
+
+    /* CTA: scroll a destinos distintos según viewport */
+    const ctaButton = document.querySelector('.catalina-cta__button');
+    const desktopHeroTarget = document.querySelector('#hero, [data-anchor="hero"], [data-hero-anchor]');
+    const mobileFormTarget = document.querySelector('#formulario, #form, #lead-form, [data-anchor="form"], [data-form-anchor]');
+
+    const MOBILE_BREAKPOINT = 768;
+
+    function scrollToTarget(target) {
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function scrollToPosition(top) {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const clampedTop = Math.max(0, Math.min(top, maxScroll));
+      window.scrollTo({ top: clampedTop, behavior: 'smooth' });
+    }
+
+    function getMobileScrollTop() {
+      if (mobileFormTarget) {
+        const rect = mobileFormTarget.getBoundingClientRect();
+        return rect.top + window.scrollY;
+      }
+
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+      return viewportHeight;
+    }
+
+    function handleCtaClick() {
+      const isMobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
+
+      if (isMobile) {
+        const targetTop = getMobileScrollTop();
+        scrollToPosition(targetTop);
+        return;
+      }
+
+      const target = desktopHeroTarget || document.body;
+      scrollToTarget(target);
+    }
+
+    if (ctaButton) {
+      ctaButton.addEventListener('click', handleCtaClick);
+    }
 
     const highlightTargets = document.querySelectorAll('[data-highlight]');
     const highlightObserver = new IntersectionObserver((entries, observer) => {
