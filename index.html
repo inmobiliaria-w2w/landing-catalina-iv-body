@@ -417,6 +417,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      touch-action: pan-y;
     }
 
     .catalina-types__slide {
@@ -436,6 +437,7 @@
       border-radius: 12px;
       background: #ffffff;
       box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+      cursor: zoom-in;
     }
 
     .catalina-types__arrow {
@@ -513,6 +515,67 @@
       .catalina-types__decor {
         width: 160px;
       }
+    }
+
+    .catalina-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      z-index: 9999;
+      backdrop-filter: blur(2px);
+    }
+
+    .catalina-lightbox[hidden] {
+      display: none;
+    }
+
+    .catalina-lightbox__content {
+      position: relative;
+      max-width: min(1200px, 96vw);
+      max-height: 88vh;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+      overflow: auto;
+    }
+
+    .catalina-lightbox__image {
+      display: block;
+      max-width: 100%;
+      max-height: calc(88vh - 28px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      cursor: zoom-out;
+    }
+
+    .catalina-lightbox__close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: none;
+      background: rgba(0, 0, 0, 0.65);
+      color: #ffffff;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .catalina-lightbox__close:hover,
+    .catalina-lightbox__close:focus-visible {
+      transform: scale(1.05);
+      opacity: 0.9;
+      outline: none;
     }
 
     /*
@@ -791,6 +854,13 @@
     <img class="catalina-types__decor" src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bd6cbc20a25ba3d9c9b98.png" alt="Decoración vegetal">
   </section>
 
+  <div class="catalina-lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de tipología" hidden aria-hidden="true">
+    <div class="catalina-lightbox__content">
+      <button class="catalina-lightbox__close" type="button" aria-label="Cerrar imagen ampliada">×</button>
+      <img class="catalina-lightbox__image" src="" alt="" loading="lazy">
+    </div>
+  </div>
+
   <section class="catalina-location" id="ubicacion" aria-label="Cerca de todo lo que necesitas">
     <div class="catalina-location__inner">
       <div>
@@ -895,10 +965,20 @@
     const typeSlides = Array.from(document.querySelectorAll('.catalina-types__slide'));
     const typeArrowLeft = document.querySelector('.catalina-types__arrow--left');
     const typeArrowRight = document.querySelector('.catalina-types__arrow--right');
+    const lightbox = document.querySelector('.catalina-lightbox');
+    const lightboxImage = lightbox.querySelector('.catalina-lightbox__image');
+    const lightboxClose = lightbox.querySelector('.catalina-lightbox__close');
     const typeOrder = ['flat1', 'flat2', 'duplex1', 'duplex2'];
     const TYPE_AUTOPLAY_DELAY = 4000;
+    const SWIPE_THRESHOLD = 40;
     let swipeStartX = null;
+    let swipeSource = null;
     let typeAutoplayId = null;
+
+    function resetSwipe() {
+      swipeStartX = null;
+      swipeSource = null;
+    }
 
     function restartTypeAutoplay() {
       if (typeAutoplayId) {
@@ -917,6 +997,34 @@
         slide.hidden = !isActive;
         slide.classList.toggle('is-active', isActive);
       });
+    }
+
+    function openLightbox(image) {
+      if (!image) return;
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt || 'Tipología ampliada';
+      lightbox.hidden = false;
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lightboxClose.focus({ preventScroll: true });
+    }
+
+    function closeLightbox() {
+      lightboxImage.src = '';
+      lightboxImage.alt = '';
+      lightbox.hidden = true;
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function handleSwipeEnd(source, clientX) {
+      if (swipeStartX === null || swipeSource !== source) return;
+      const deltaX = clientX - swipeStartX;
+      if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
+        moveType(deltaX < 0 ? 1 : -1);
+        restartTypeAutoplay();
+      }
+      resetSwipe();
     }
 
     function moveType(direction) {
@@ -944,22 +1052,47 @@
     });
 
     typesFrame.addEventListener('pointerdown', (event) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
       swipeStartX = event.clientX;
+      swipeSource = 'pointer';
     });
 
     typesFrame.addEventListener('pointerup', (event) => {
-      if (swipeStartX === null) return;
-      const deltaX = event.clientX - swipeStartX;
-      const threshold = 40;
-      if (Math.abs(deltaX) > threshold) {
-        moveType(deltaX < 0 ? 1 : -1);
-        restartTypeAutoplay();
-      }
-      swipeStartX = null;
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      handleSwipeEnd('pointer', event.clientX);
     });
 
-    typesFrame.addEventListener('pointercancel', () => {
-      swipeStartX = null;
+    typesFrame.addEventListener('pointercancel', resetSwipe);
+
+    typesFrame.addEventListener('touchstart', (event) => {
+      if (event.touches.length !== 1) return;
+      swipeStartX = event.touches[0].clientX;
+      swipeSource = 'touch';
+    }, { passive: true });
+
+    typesFrame.addEventListener('touchend', (event) => {
+      if (event.changedTouches.length === 0) return;
+      handleSwipeEnd('touch', event.changedTouches[0].clientX);
+    }, { passive: true });
+
+    typeSlides.forEach((slide) => {
+      const image = slide.querySelector('img');
+      if (!image) return;
+      image.addEventListener('click', () => openLightbox(image));
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !lightbox.hasAttribute('hidden')) {
+        closeLightbox();
+      }
     });
 
     const highlightTargets = document.querySelectorAll('[data-highlight]');
