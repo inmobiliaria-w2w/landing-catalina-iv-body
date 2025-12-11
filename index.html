@@ -860,12 +860,39 @@
       </h2>
 
       <div class="catalina-tours__controls" role="tablist" aria-label="Selecciona el tipo de departamento">
-        <button class="catalina-tours__pill" type="button" data-tour="duplex" aria-pressed="true">Dúplex 144 m2</button>
-        <button class="catalina-tours__pill" type="button" data-tour="flat" aria-pressed="false">Flat 71 m2</button>
+        <button
+          class="catalina-tours__pill"
+          type="button"
+          data-tour="duplex"
+          aria-pressed="true"
+          data-sln-event="tours: seleccionar videorecorrido"
+          data-sln-event-tour="duplex"
+          data-sln-event-device=""
+        >
+          Dúplex 144 m2
+        </button>
+        <button
+          class="catalina-tours__pill"
+          type="button"
+          data-tour="flat"
+          aria-pressed="false"
+          data-sln-event="tours: seleccionar videorecorrido"
+          data-sln-event-tour="flat"
+          data-sln-event-device=""
+        >
+          Flat 71 m2
+        </button>
       </div>
 
       <div class="catalina-tours__viewer">
-        <button class="catalina-tours__arrow catalina-tours__arrow--left" type="button" aria-label="Ver video anterior">
+        <button
+          class="catalina-tours__arrow catalina-tours__arrow--left"
+          type="button"
+          aria-label="Ver video anterior"
+          data-sln-event="tours: navegar videorecorrido"
+          data-sln-event-direction="previous"
+          data-sln-event-device=""
+        >
           <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bd6d23f8277191ffdaf29.png" alt="Anterior">
         </button>
 
@@ -897,14 +924,37 @@
           </div>
         </div>
 
-        <button class="catalina-tours__arrow catalina-tours__arrow--right" type="button" aria-label="Ver siguiente video">
+        <button
+          class="catalina-tours__arrow catalina-tours__arrow--right"
+          type="button"
+          aria-label="Ver siguiente video"
+          data-sln-event="tours: navegar videorecorrido"
+          data-sln-event-direction="next"
+          data-sln-event-device=""
+        >
           <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691bd6d1379d23c6bb81a479.png" alt="Siguiente">
         </button>
       </div>
 
       <div class="catalina-tours__pagination" aria-label="Indicadores de video">
-        <button class="catalina-tours__dot" type="button" data-tour="duplex" aria-pressed="true"></button>
-        <button class="catalina-tours__dot" type="button" data-tour="flat" aria-pressed="false"></button>
+        <button
+          class="catalina-tours__dot"
+          type="button"
+          data-tour="duplex"
+          aria-pressed="true"
+          data-sln-event="tours: indicador videorecorrido"
+          data-sln-event-tour="duplex"
+          data-sln-event-device=""
+        ></button>
+        <button
+          class="catalina-tours__dot"
+          type="button"
+          data-tour="flat"
+          aria-pressed="false"
+          data-sln-event="tours: indicador videorecorrido"
+          data-sln-event-tour="flat"
+          data-sln-event-device=""
+        ></button>
       </div>
 
     </div>
@@ -915,15 +965,62 @@
       <div class="catalina-types__copy">
         <h2>Tipologías pensadas en tu <span class="catalina-types__highlight" data-highlight="types">comodidad</span></h2>
         <div class="catalina-types__pills" role="tablist" aria-label="Selecciona una tipología">
-          <button class="catalina-types__pill" type="button" data-type="flat1" aria-pressed="true">Flat 1</button>
-          <button class="catalina-types__pill" type="button" data-type="flat2" aria-pressed="false">Flat 2</button>
-          <button class="catalina-types__pill" type="button" data-type="duplex1" aria-pressed="false">Dúplex 1</button>
-          <button class="catalina-types__pill" type="button" data-type="duplex2" aria-pressed="false">Dúplex 2</button>
+          <button
+            class="catalina-types__pill"
+            type="button"
+            data-type="flat1"
+            aria-pressed="true"
+            data-sln-event="tipologias: seleccionar plano"
+            data-sln-event-type="flat1"
+            data-sln-event-device=""
+          >
+            Flat 1
+          </button>
+          <button
+            class="catalina-types__pill"
+            type="button"
+            data-type="flat2"
+            aria-pressed="false"
+            data-sln-event="tipologias: seleccionar plano"
+            data-sln-event-type="flat2"
+            data-sln-event-device=""
+          >
+            Flat 2
+          </button>
+          <button
+            class="catalina-types__pill"
+            type="button"
+            data-type="duplex1"
+            aria-pressed="false"
+            data-sln-event="tipologias: seleccionar plano"
+            data-sln-event-type="duplex1"
+            data-sln-event-device=""
+          >
+            Dúplex 1
+          </button>
+          <button
+            class="catalina-types__pill"
+            type="button"
+            data-type="duplex2"
+            aria-pressed="false"
+            data-sln-event="tipologias: seleccionar plano"
+            data-sln-event-type="duplex2"
+            data-sln-event-device=""
+          >
+            Dúplex 2
+          </button>
         </div>
       </div>
 
       <div class="catalina-types__viewer">
-        <button class="catalina-types__arrow catalina-types__arrow--left" type="button" aria-label="Ver tipología anterior">
+        <button
+          class="catalina-types__arrow catalina-types__arrow--left"
+          type="button"
+          aria-label="Ver tipología anterior"
+          data-sln-event="tipologias: navegar plano"
+          data-sln-event-direction="previous"
+          data-sln-event-device=""
+        >
           <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691dc0d6e171b872753090f0.png" alt="Anterior">
         </button>
 
@@ -957,7 +1054,14 @@
           </article>
         </div>
 
-        <button class="catalina-types__arrow catalina-types__arrow--right" type="button" aria-label="Ver siguiente tipología">
+        <button
+          class="catalina-types__arrow catalina-types__arrow--right"
+          type="button"
+          aria-label="Ver siguiente tipología"
+          data-sln-event="tipologias: navegar plano"
+          data-sln-event-direction="next"
+          data-sln-event-device=""
+        >
           <img src="https://storage.googleapis.com/msgsndr/dBvLpgVHO5ClKlBDvren/media/691dc0d6d4f9b3615662e981.png" alt="Siguiente">
         </button>
       </div>
@@ -1024,7 +1128,14 @@
           Tu espacio espera por ti.<br />
           ¿Vienes a verlo?
         </h2>
-        <button class="catalina-cta__button" type="button">¡Quiero registrarme!</button>
+        <button
+          class="catalina-cta__button"
+          type="button"
+          data-sln-event="cta: quiero registrarme"
+          data-sln-event-device=""
+        >
+          ¡Quiero registrarme!
+        </button>
       </div>
 
       <div class="catalina-cta__media">
@@ -1050,6 +1161,14 @@
       duplex: 'https://www.youtube.com/embed/HELtFWJi3cI?si=WPainYYEQzOCJ6jG',
       flat: 'https://www.youtube.com/embed/e0qLO4XAQlc?si=7KTNzINbGv-mxVc3',
     };
+
+    const deviceType = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'mobile' : 'desktop';
+    const selineTrackableElements = document.querySelectorAll('[data-sln-event]');
+    selineTrackableElements.forEach((element) => {
+      if (!element.dataset.slnEventDevice) {
+        element.dataset.slnEventDevice = deviceType;
+      }
+    });
 
     function setActiveTour(tour) {
       if (!tourSources[tour]) return;
